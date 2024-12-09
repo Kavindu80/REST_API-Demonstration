@@ -1,0 +1,249 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f7fc;
+  color: #333;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* App Container */
+.app {
+  text-align: center;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 1200px;
+  margin: 30px auto;
+  overflow: hidden;
+  animation: fadeIn 1.2s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Styles */
+.header {
+  background: linear-gradient(135deg, #007acc, #005f99);
+  padding: 25px;
+  color: white;
+  border-radius: 20px 20px 0 0;
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  transform: skewX(-30deg);
+  transform-origin: left;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.header span {
+  position: relative;
+  z-index: 2;
+}
+
+/* Form Styles */
+.form {
+  margin: 40px auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  animation: slideIn 1s ease-out;
+}
+
+input, button {
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+  width: 260px;
+  border: 2px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+input:focus {
+  border-color: #005f99;
+  box-shadow: 0 0 12px rgba(0, 95, 153, 0.6);
+  outline: none;
+  background-color: #ffffff;
+}
+
+button {
+  background: linear-gradient(90deg, #007acc, #005f99);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  min-width: 150px;
+  font-weight: bold;
+}
+
+button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+button:focus {
+  outline: 2px solid #005f99;
+  outline-offset: 3px;
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Error Message Styles */
+.error {
+  color: #ff4d4d;
+  font-size: 15px;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Commits Section */
+.commits {
+  margin-top: 50px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  text-align: left;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+  background-color: #007acc;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+}
+
+td {
+  color: #333;
+}
+
+tr:hover {
+  background-color: #e8f5ff;
+  transition: background-color 0.3s ease;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .form {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  input, button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .commits {
+    padding: 20px;
+  }
+
+  table {
+    font-size: 14px;
+    display: block;
+    overflow-x: auto;
+  }
+
+  th, td {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    font-size: 22px;
+    padding: 15px;
+  }
+
+  .form {
+    margin: 20px auto;
+  }
+
+  input, button {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  button {
+    min-width: 120px;
+  }
+
+  .commits {
+    padding: 15px;
+  }
+
+  table {
+    font-size: 12px;
+  }
+}
+
+/* Keyframes for Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
