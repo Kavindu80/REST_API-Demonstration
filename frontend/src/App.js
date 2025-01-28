@@ -1,83 +1,67 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./App.css";
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Login from './components/Login';
+import BitbucketDashboard from './components/BitbucketDashboard';
+import ContributionsDashboard from './components/ContributionsDashboard';
+import StudentSignup from './components/students/StudentSignup';
+import AdminLogin from './components/Admin/Adminlogin';
+import AdminSignup from './components/Admin/AdminSignup';
+import AdminDashboard from './components/AdminDashboard';
+import ContributorsDashboard from './components/ContributorsDashboard';
+import WorkspaceDashboard from './components/WorkspaceDashboard';
+
+
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const workspace = localStorage.getItem('bitbucketWorkspace');
+  const accessToken = localStorage.getItem('bitbucketToken');
+
+  return workspace && accessToken ? children : <Navigate to="/" replace />;
+};
 
 function App() {
-  const [workspace, setWorkspace] = useState("");
-  const [repoSlug, setRepoSlug] = useState("");
-  const [commits, setCommits] = useState([]);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const fetchCommits = async () => {
-    if (!workspace || !repoSlug) {
-      setError("Please enter both Workspace and Repository Slug.");
-      return;
-    }
-
-    setError("");
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `http://localhost:4000/api/commits?workspace=${workspace}&repoSlug=${repoSlug}`
-      );
-      setCommits(response.data.commits);
-    } catch (err) {
-      setError("Failed to fetch commits. Please check the inputs or server.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="app">
-      <header className="header">
-        <h1>Bitbucket Dashboard</h1>
-      </header>
-      <div className="form">
-        <input
-          type="text"
-          placeholder="Workspace"
-          value={workspace}
-          onChange={(e) => setWorkspace(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Repository Name"
-          value={repoSlug}
-          onChange={(e) => setRepoSlug(e.target.value)}
-        />
-        <button onClick={fetchCommits}>View Commits</button>
-      </div>
-      {loading && <p>Loading...</p>}
-      {error && <p className="error">{error}</p>}
-      <div className="commits">
-        {commits.length > 0 && (
-          <table>
-            <thead>
-              <tr>
-                <th>Hash</th>
-                <th>Message</th>
-                <th>Author</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {commits.map((commit, index) => (
-                <tr key={index}>
-                  <td>{commit.hash}</td>
-                  <td>{commit.message}</td>
-                  <td>{commit.author}</td>
-                  <td>{new Date(commit.date).toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {commits.length === 0 && !loading && <p>No commits to display.</p>}
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <BitbucketDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/workspace/:workspace/repo/:repoSlug/contributions"
+        element={<ContributionsDashboard />}
+      />
+
+      <Route
+        path="/adminsignup"
+        element={<AdminSignup />}></Route>
+       <Route
+        path="/studentsignup"
+        element={<StudentSignup />}
+      />
+      <Route
+        path="/adminlogin"
+        element={<AdminLogin />}>
+      </Route>
+      <Route
+        path="/admin/dashboard"
+        element={<AdminDashboard />}>
+      </Route>
+      <Route
+        path="/workspaces"
+        element={< WorkspaceDashboard />}/>
+      <Route
+        path="/contributors"
+        element={<ContributorsDashboard />}/>
+      <Route path="/workspace/:workspaceName" element={<BitbucketDashboard />} />
+    </Routes>
+
   );
 }
 
+// Wrap App with BrowserRouter in index.js
 export default App;
