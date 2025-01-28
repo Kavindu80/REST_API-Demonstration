@@ -157,7 +157,7 @@ app.get(
 );
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/bitbucket_dashboard', {
+mongoose.connect('mongodb+srv://kavindu:xppFRIgfwykHia2E@cluster0.iofqwq5.mongodb.net/bitbucket_admin?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
