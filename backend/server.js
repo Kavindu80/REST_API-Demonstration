@@ -157,10 +157,12 @@ app.get(
 );
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://kavindu:xppFRIgfwykHia2E@cluster0.iofqwq5.mongodb.net/bitbucket_admin?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+}).then(() => console.log("MongoDB Connected Successfully"))
+.catch(err => console.error("MongoDB Connection Error:", err));
+
 const adminRoutes = require('./routes/Admins');
 app.use('/api/admin', adminRoutes);
 
@@ -174,5 +176,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on ${PORT}`);
 });
